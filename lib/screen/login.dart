@@ -2,8 +2,11 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_uas/api/http_helper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../components/chek_have_account.dart';
 import '../screen/registrasi.dart';
+
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -17,6 +20,29 @@ class _Login extends State<Login> {
   TextEditingController etEmail = TextEditingController();
   TextEditingController etPassword = TextEditingController();
 
+Future doLogin() async {
+    final email = etEmail.text;
+    final password = etPassword.text;
+    const deviceId = "12345";
+    final response = await HttpHelper().login(email, password, deviceId);
+    print(response.body);
+
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    const key = 'token';
+    final value = pref.get(key);
+    final token = value;
+    if (token == null) {
+      Navigator.pushNamed(
+        context,
+        '/login',
+      );
+    } else {
+      Navigator.pushNamed(
+        context,
+        '/home',
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,13 +55,6 @@ class _Login extends State<Login> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                // Image.asset(
-                //   'assets/password.png',
-                //   width: 180,
-                // ),
-                // const SizedBox(
-                //   height: 10,
-                // ),
                 Text(
                   'WELCOME TO STISLA',
                   style: TextStyle(
@@ -170,7 +189,7 @@ class _Login extends State<Login> {
                         ),
                       ),
                       onPressed: () async {
-                      
+                       await doLogin();
                       },
                       child: const Text(
                         "SIGN IN",

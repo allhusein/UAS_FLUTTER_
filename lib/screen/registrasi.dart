@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:flutter_uas/api/http_helper.dart';
 import '../components/chek_have_account.dart';
 import '../screen/login.dart';
 
@@ -17,6 +18,20 @@ class _Register extends State<Register> {
   TextEditingController etEmail = TextEditingController();
   TextEditingController etPassword = TextEditingController();
 
+ doRegister() async {
+    final name = etName.text;
+    final email = etEmail.text;
+    final password = etPassword.text;
+    const deviceId = "12345";
+    final response =
+        await HttpHelper().register(name, email, password, deviceId);
+    print(response.body);
+
+    Navigator.pushNamed(
+      context,
+      '/login',
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -203,7 +218,7 @@ class _Register extends State<Register> {
                         ),
                       ),
                       onPressed: () {
-                        
+                         doRegister();
                       },
                       child: const Text(
                         "Sign Up",
