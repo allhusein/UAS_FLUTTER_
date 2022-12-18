@@ -1,14 +1,14 @@
 
-class Category {
+class Kategori {
   int id;
   String name;
 
-  Category({
+  Kategori({
     required this.id,
     required this.name,
   });
 
-  Category.fromJson(Map json)
+  Kategori.fromJson(Map json)
       : id = json['id'],
         name = json['name'];
 }

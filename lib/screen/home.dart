@@ -3,6 +3,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_uas/animasi/task_bar.dart';
+import 'package:flutter_uas/api/kategori_helper.dart';
+import 'package:flutter_uas/screen/category.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_uas/components/category_models.dart';
 
@@ -23,6 +26,8 @@ class _Home extends State<Home> {
   String name = '';
   String email = '';
   List listCategory = [];
+  TextEditingController etCategory = TextEditingController();
+  final ScrollController scrollController = ScrollController();
 
   getPref() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -45,16 +50,18 @@ class _Home extends State<Home> {
     setState(() {
       var listRespon = dataResponse['data'];
       for (var i = 0; i < listRespon.length; i++) {
-        listCategory.add(Category.fromJson(listRespon[i]));
+        listCategory.add(Kategori.fromJson(listRespon[i]));
       }
     });
   }
 
-  @override
-  void initState() {
-    getPref();
-    super.initState();
+  doAddCategory() async {
+    final name = etCategory.text;
+    final response = await CategoryService().addCategory(name);
+    print(response.body);
+    listCategory.clear();
     getKategori();
+    etCategory.clear();
   }
 
   logOut() async {
@@ -67,16 +74,28 @@ class _Home extends State<Home> {
     print(response.body);
   }
 
+
+@override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      if (scrollController.offset ==
+          scrollController.position.maxScrollExtent) {
+        
+      }
+    });
+
+    
+  }
   @override
-  Widget build(BuildContext context) {
+ Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Color.fromARGB(255, 86, 3, 101),
+      backgroundColor: Color.fromARGB(255, 66, 5, 55),
       body: Column(
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 169, 31, 130),
+              color: Color.fromARGB(255, 213, 48, 247),
             ),
             height: 180,
             child: Column(
@@ -84,43 +103,16 @@ class _Home extends State<Home> {
               children: [
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 35, horizontal: 25),
-                  child: Text(
-                    'Dashboard',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 29,
-                      fontFamily: 'Raleway',
-                      shadows: [
-                        Shadow(
-                          color: Colors.red.shade300,
-                          blurRadius: 6,
-                          offset: const Offset(4.0, 4.0),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
                       const EdgeInsets.symmetric(vertical: 0, horizontal: 25),
                   child: Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: Alignment.center,
                     child: Text(
-                      'Welcome $name',
+                      'Selamat Datang di Stisla $name',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Color.fromARGB(255, 45, 0, 38),
                         fontWeight: FontWeight.w700,
                         fontSize: 20,
                         fontFamily: 'Raleway',
-                        shadows: [
-                          Shadow(
-                            color: Colors.red.shade300,
-                            blurRadius: 6,
-                            offset: const Offset(4.0, 4.0),
-                          ),
-                        ],
                       ),
                     ),
                   ),
@@ -137,7 +129,7 @@ class _Home extends State<Home> {
                         child: Text(
                           email,
                           style: const TextStyle(
-                            color: Colors.white,
+                            color: Color.fromARGB(255, 95, 12, 12),
                             fontWeight: FontWeight.w600,
                             fontSize: 15,
                             fontFamily: 'Raleway',
@@ -146,9 +138,10 @@ class _Home extends State<Home> {
                       ),
                       Align(
                         alignment: Alignment.centerRight,
+                        
                         child: IconButton(
                           icon: const Icon(
-                            Icons.logout_sharp,
+                            Icons.outbox_outlined,
                             color: Colors.white,
                             size: 29,
                           ),
@@ -157,8 +150,25 @@ class _Home extends State<Home> {
                               context,
                               '/login',
                             );
-                             logOut();
-                             Navigator.pushNamed(context, "/");
+                            logOut();
+                          },
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.people,
+                            color: Colors.white,
+                            size: 29,
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              context,
+                              '/login',
+                            );
+                            logOut();
                           },
                         ),
                       ),
@@ -171,23 +181,30 @@ class _Home extends State<Home> {
           const SizedBox(
             height: 20,
           ),
+          
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.purple.shade50,
+                color: Color.fromARGB(255, 218, 189, 222),
                 borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(10.0),
-                  topLeft: Radius.circular(10.0),
+                  topRight: Radius.zero,
+                  topLeft: Radius.zero,
                 ),
               ),
               child: ListView.builder(
+                controller: scrollController,
+              physics: AlwaysScrollableScrollPhysics(),
+              padding: EdgeInsets.symmetric(
+                horizontal: 10.0,
+                vertical: 30.0,
+              ),
                 itemCount: listCategory.length,
                 itemBuilder: (context, index) {
                   var kategori = listCategory[index];
                   return Dismissible(
                     key: UniqueKey(),
                     background: Container(
-                      color: Colors.greenAccent,
+                      color: Color.fromARGB(255, 208, 105, 240),
                       child: Padding(
                         padding: const EdgeInsets.all(15),
                         child: Row(
@@ -201,7 +218,7 @@ class _Home extends State<Home> {
                       ),
                     ),
                     secondaryBackground: Container(
-                      color: Colors.redAccent,
+                      color: Color.fromARGB(255, 172, 12, 172),
                       child: Padding(
                         padding: const EdgeInsets.all(15),
                         child: Row(
@@ -215,6 +232,20 @@ class _Home extends State<Home> {
                         ),
                       ),
                     ),
+                    onDismissed: (DismissDirection direction) async {
+                      if (direction == DismissDirection.startToEnd) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  categories(category: listCategory[index]),
+                            ));
+                      } else {
+                        final response = await HttpHelper()
+                            .deleteCategory(listCategory[index]);
+                        print(response.body);
+                      }
+                    },
                     child: Container(
                       margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                       decoration: BoxDecoration(
@@ -247,9 +278,46 @@ class _Home extends State<Home> {
                 },
               ),
             ),
-            
           ),
-          
+          Container(
+            margin: const EdgeInsets.all(16),
+            child: TextFormField(
+              controller: etCategory,
+              decoration: InputDecoration(
+                hintText: "Masukan Kategori",
+                hintStyle: const TextStyle(fontFamily: 'Raleway'),
+                filled: true,
+                fillColor: Colors.white,
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.zero,
+                  borderSide: const BorderSide(
+                    color: Colors.white,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: Colors.white,
+                  ),
+                  borderRadius: BorderRadius.zero,
+                ),
+                suffixIcon: Container(
+                  margin: const EdgeInsets.fromLTRB(0, 8, 12, 8),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 201, 19, 192),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                    child: const Text("Add"),
+                    onPressed: () {
+                      doAddCategory();
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

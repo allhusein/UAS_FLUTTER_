@@ -7,9 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_uas/components/category_models.dart';
 
 class HttpHelper {
-  // final String _baseUrl = 'http://192.168.2.206:8000/api/';
-    final String _baseUrl = 'http://10.0.2.2:8000/api/';
-
+  final String _baseUrl = 'http://192.168.20.166:8000/api/';
   final String token = '';
 
   Future<Response> login(String email, String password, String deviceId) async {
@@ -87,5 +85,72 @@ class HttpHelper {
     const key = 'token';
     final value = prefs.get(key) ?? 0;
     print('read : $value');
+  }
+
+  save(String key, String data) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString(key, data);
+  }
+
+  // read() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   const key = 'token';
+  //   final value = prefs.get(key) ?? 0;
+  //   print('read : $value');
+  // }
+
+  Future<Response> requestAddCategory(String name) async {
+    var url = Uri.parse(_baseUrl + 'category');
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    final response = await post(
+      url,
+      headers: {
+        "Accept": "application/json",
+        "Access-Control_Allow_Origin": "*",
+        "Authorization": "Bearer $token",
+      },
+      body: {
+        "name": name,
+      },
+    );
+    return response;
+  }
+
+  Future<Response> deleteCategory(Kategori category) async {
+    final url = Uri.parse(_baseUrl + 'category/${category.id}');
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    const key = 'token';
+    final value = pref.get(key);
+    final token = value;
+    final headers = {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ' + '$token',
+    };
+
+    final response = await delete(url, headers: headers);
+    return response;
+  }
+
+  Future<Response> editCategory(Kategori category, String name) async {
+    final url = Uri.parse(_baseUrl + 'category/${category.id}');
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    const key = 'token';
+    final value = pref.get(key);
+    final token = value;
+    final body = {
+      'name': name,
+    };
+    final headers = {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ' + '$token',
+    };
+
+    final response = await put(url, body: body, headers: headers);
+
+    print(response.body);
+    print(response.statusCode);
+    return response;
   }
 }

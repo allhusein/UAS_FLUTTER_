@@ -22,7 +22,8 @@ class MyApp extends StatelessWidget {
         "/login": (context) => const Login(),
         "/register": (context) => const Register(),
         "/home": (context) => const Home(),
-         AnimatedBottomBar.tag: (context) => AnimatedBottomBar(),
+        AnimatedBottomBar.tag: (context) => AnimatedBottomBar(),
+        
       },
       title: 'Flutter Demo',
       theme: ThemeData(

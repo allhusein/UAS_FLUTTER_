@@ -44,23 +44,21 @@ class _Firstpage extends State<FirstPage> {
         height: double.infinity,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              radius: 150,
-              backgroundColor: Color.fromARGB(255, 91, 0, 82),
-              child: Text(
-                'Welcome to STISLA',
-                style: TextStyle(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 50,
-                  color: Colors.white,
+              children: [
+                Text(
+                  'Welcome to STISLA',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 50,
+                    color: Color.fromARGB(255, 71, 2, 54),
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ],
+              ],
+            )
+          
         ),
-      ),
+      
     );
   }
 }

@@ -14,17 +14,10 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text(
-          login ? "Belum punya akun ? " : "Sudah punya akun ? ",
-          style: const TextStyle(
-            color: Colors.black,
-            fontFamily: 'Raleway',
-          ),
-        ),
         GestureDetector(
           onTap: press as void Function()?,
           child: Text(
-            login ? "Sign Up" : "Silahkan Sign in",
+            login ? "Sign Up" : "Sign in",
             style: TextStyle(
               color: Color.fromARGB(255, 141, 37, 125),
               fontWeight: FontWeight.w700,
