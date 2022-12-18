@@ -92,12 +92,7 @@ class HttpHelper {
     prefs.setString(key, data);
   }
 
-  // read() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   const key = 'token';
-  //   final value = prefs.get(key) ?? 0;
-  //   print('read : $value');
-  // }
+ 
 
   Future<Response> requestAddCategory(String name) async {
     var url = Uri.parse(_baseUrl + 'category');
