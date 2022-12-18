@@ -104,7 +104,7 @@ class _Home extends State<Home> {
                   padding:
                       const EdgeInsets.symmetric(vertical: 0, horizontal: 25),
                   child: Align(
-                    
+
                     alignment: Alignment.center,
                     child: Text(
                       'Selamat Datang di Stisla $name',
@@ -117,6 +117,24 @@ class _Home extends State<Home> {
                     ),
                   ),
                 ),
+                Align(
+                        alignment: Alignment.centerLeft,
+                        
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.logout,
+                            color: Colors.white,
+                            size: 29,
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              context,
+                              '/login',
+                            );
+                            logOut();
+                          },
+                        ),
+                      ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 30,
@@ -137,24 +155,7 @@ class _Home extends State<Home> {
                         ),
                       ),
                       
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.logout,
-                            color: Colors.white,
-                            size: 29,
-                          ),
-                          onPressed: () {
-                            Navigator.pushNamed(
-                              context,
-                              '/login',
-                            );
-                            logOut();
-                          },
-                        ),
-                      ),
+                      
                     ],
                   ),
                 ),
