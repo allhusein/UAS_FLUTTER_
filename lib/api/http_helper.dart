@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_uas/components/category_models.dart';
 
 class HttpHelper {
-  final String _baseUrl = 'http://192.168.20.166:8000/api/';
+  final String _baseUrl = 'http://192.168.1.215:8000/api/';
   final String token = '';
 
   Future<Response> login(String email, String password, String deviceId) async {
@@ -150,6 +150,7 @@ class HttpHelper {
     final response = await put(url, body: body, headers: headers);
 
     print(response.body);
+    print(response.headers);
     print(response.statusCode);
     return response;
   }

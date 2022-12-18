@@ -39,7 +39,7 @@ Future doLogin() async {
     } else {
       Navigator.pushNamed(
         context,
-        '/Dashboard',
+        '/home',
       );
     }
   }

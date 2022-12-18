@@ -10,17 +10,17 @@ import 'package:flutter_uas/components/category_models.dart';
 
 import '../api/http_helper.dart';
 
-class kategoriPage extends StatefulWidget {
-  const kategoriPage({super.key});
+class Home extends StatefulWidget {
+  const Home({super.key});
 
   
   @override
-  State<kategoriPage> createState() => _kategoriPage();
+  State<Home> createState() => _Home();
 
 
 }
 
-class _kategoriPage extends State<kategoriPage> {
+class _Home extends State<Home> {
   String token = '';
   String name = '';
   String email = '';
@@ -91,7 +91,80 @@ class _kategoriPage extends State<kategoriPage> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 66, 5, 55),
       body: Column(
-        children: [  
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 213, 48, 247),
+            ),
+            height: 180,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 0, horizontal: 25),
+                  child: Align(
+                    
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Selamat Datang di Stisla $name',
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 45, 0, 38),
+                        fontWeight: FontWeight.w700,
+                        fontSize: 20,
+                        fontFamily: 'Raleway',
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 30,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          email,
+                          style: const TextStyle(
+                            color: Color.fromARGB(255, 95, 12, 12),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15,
+                            fontFamily: 'Raleway',
+                          ),
+                        ),
+                      ),
+                      
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.logout,
+                            color: Colors.white,
+                            size: 29,
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              context,
+                              '/login',
+                            );
+                            logOut();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          
           Expanded(
             child: Container(
               decoration: BoxDecoration(

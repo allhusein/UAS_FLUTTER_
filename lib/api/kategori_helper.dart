@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../components/category_models.dart';
 
 class CategoryService {
-  String baseUrl = 'http://192.168.20.166:8000/api/';
+  String baseUrl = 'http://192.168.1.215:8000/api/';
   String token = '';
 
   static Future<List<dynamic>> getCategories(String page) async {
@@ -38,7 +38,7 @@ class CategoryService {
       }
 
       categoryServices.add(categories);
-      categoryServices.add(listPage[2]);
+      categoryServices.add(listPage[1]);
     }
 
     return categoryServices;
