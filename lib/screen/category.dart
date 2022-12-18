@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_uas/api/http_helper.dart';
 import 'package:flutter_uas/components/category_models.dart';
 import 'package:flutter_uas/api/http_helper.dart';
+import 'package:flutter_uas/screen/dashboard.dart';
 
-import 'home.dart';
+import 'dashboard.dart';
 
 class categories extends StatefulWidget {
   const categories({super.key, required this.category});
@@ -22,7 +23,7 @@ class _categoriesState extends State<categories> {
     print(response.body);
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => Home()),
+      MaterialPageRoute(builder: (context) => Dashboard()),
     );
   }
 

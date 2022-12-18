@@ -3,7 +3,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_uas/animasi/task_bar.dart';
 import 'package:flutter_uas/api/kategori_helper.dart';
 import 'package:flutter_uas/screen/category.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,17 +10,17 @@ import 'package:flutter_uas/components/category_models.dart';
 
 import '../api/http_helper.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class kategoriPage extends StatefulWidget {
+  const kategoriPage({super.key});
 
   
   @override
-  State<Home> createState() => _Home();
+  State<kategoriPage> createState() => _kategoriPage();
 
 
 }
 
-class _Home extends State<Home> {
+class _kategoriPage extends State<kategoriPage> {
   String token = '';
   String name = '';
   String email = '';
@@ -92,96 +91,7 @@ class _Home extends State<Home> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 66, 5, 55),
       body: Column(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Color.fromARGB(255, 213, 48, 247),
-            ),
-            height: 180,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 0, horizontal: 25),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Selamat Datang di Stisla $name',
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 45, 0, 38),
-                        fontWeight: FontWeight.w700,
-                        fontSize: 20,
-                        fontFamily: 'Raleway',
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 30,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          email,
-                          style: const TextStyle(
-                            color: Color.fromARGB(255, 95, 12, 12),
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15,
-                            fontFamily: 'Raleway',
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.outbox_outlined,
-                            color: Colors.white,
-                            size: 29,
-                          ),
-                          onPressed: () {
-                            Navigator.pushNamed(
-                              context,
-                              '/login',
-                            );
-                            logOut();
-                          },
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.people,
-                            color: Colors.white,
-                            size: 29,
-                          ),
-                          onPressed: () {
-                            Navigator.pushNamed(
-                              context,
-                              '/login',
-                            );
-                            logOut();
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          
+        children: [  
           Expanded(
             child: Container(
               decoration: BoxDecoration(
@@ -192,8 +102,6 @@ class _Home extends State<Home> {
                 ),
               ),
               child: ListView.builder(
-                controller: scrollController,
-              physics: AlwaysScrollableScrollPhysics(),
               padding: EdgeInsets.symmetric(
                 horizontal: 10.0,
                 vertical: 30.0,
